@@ -27,5 +27,25 @@
 		select * from tbl_board
 		where bno = #{bno}
 	</select>
-
+	
+	<!-- 글 조회수 1증가 -->
+	<update id="updateReadCnt">
+		update tbl_board
+		set viewcnt = viewcnt+1
+		where bno = #{bno}
+	</update>
+	
+	<!-- 글 수정하기 -->
+	<update id="updateBoard">
+		update tbl_board
+		set title = #{title}, writer=#{writer}, content=#{content}
+		where bno = #{bno}
+	</update>
+	
+	<!-- 글 삭제하기 -->
+	<delete id="deleteBoard">
+		delete from tbl_board
+		where bno=#{bno}
+	</delete>
+	
 </mapper>

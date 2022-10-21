@@ -3,6 +3,7 @@ package com.itwillbs.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +80,7 @@ public class BoardController {
 	//게시판 리스트 -> get
 	//주소창에 주소를 치고 엔터를 쳐서 움직이는 것은 모두 get방식이다
 	@RequestMapping(value="/listAll", method = RequestMethod.GET)
-	public void listAllGET(@ModelAttribute("msg") String msg, Model model) throws Exception{
+	public void listAllGET(@ModelAttribute("msg") String msg, Model model, HttpSession session) throws Exception{
 		log.info("listAllGET() 호출");
 		
 		// listAll페이지로 이동하는 방법은 2가지
@@ -98,13 +99,19 @@ public class BoardController {
 		//데이터를 전달할 때 model을 사용한다!!
 		model.addAttribute("boardList", boardList);
 		
+		//세션객체(HttpSession session) - isUpdate 정보 전달
+		//HttpSession session -> 이 메서드가 실행 될 때 세션 정보는 가져와라! 라는 뜻
+		//isUpdate라는 것을 false로 넘겨라
+		session.setAttribute("isUpdate", false);
+		
+		
 		log.info("/board/listAll (get) -> /board/listAll.jsp");
 	}
 	
 	// http://localhost:8088/board/read?bno=12
 	//글 본문 보기 - GET
 	@RequestMapping(value="/read", method = RequestMethod.GET)
-	public void readGET(@RequestParam("bno") int bno, Model model /* @ModelAttribute("bno") int bno */) throws Exception{
+	public void readGET(HttpSession session, @RequestParam("bno") int bno, Model model /* @ModelAttribute("bno") int bno */) throws Exception{
 		log.info("readGET() 호출");
 		
 		// 전달 정보 저장 - bno 방법 2개
@@ -117,6 +124,27 @@ public class BoardController {
 		log.info(bno + " --------------bno");
 		
 		
+		//조회수 제어하기---------------------------------------------
+		//조회수 1올리고 그 다음 제어
+		
+		//이 값을 list(listAllGET)에서 넘겨주기 - 세션으로
+		//boolean isUpdate = false;
+		//세션으로 넘어온 값 확인
+		log.info("############################isUpdate : " + session.getAttribute("isUpdate"));
+		boolean isUpdate = (boolean)session.getAttribute("isUpdate");
+		//isUpdate로 제어하기
+		//isUpdate == false   ====    !isUpdate
+		//단항 연산이 제일 빠르다 !isUpdate 이렇게 사용하도록 하자
+		if(!isUpdate) {
+			// 서비스 - 조회수 업데이트 updateReadCount(bno)
+			service.updateReadCount(bno);
+			log.info("조회수 1증가!!!띠용");
+			//조회수 1올리고 그 다음에는 올라가지 않게
+			//글을 새로고침해서 올라가지 않음
+			session.setAttribute("isUpdate", true);
+		}
+		
+		
 		// 서비스로 데이터 꺼내오기
 		BoardVO vo = service.getBoard(bno);
 		model.addAttribute("vo", vo);
@@ -125,6 +153,108 @@ public class BoardController {
 		log.info("/board/read -> /board/read.jsp");
 		
 	}
+	
+	
+	//글 수정하기 - GET(기존의 정보 조회 출력 + 수정할 정보 입력)
+	@RequestMapping(value="/modify", method = RequestMethod.GET)
+	public void modifyGET(@RequestParam("bno") int bno, Model model) throws Exception{
+		
+		//전달 정보 저장 - bno
+		//@RequestParam("bno") int bno
+		//@RequestParam("bno") 이것을 생략해도 된다
+		//BoardVO vo 이렇게도 받으니까
+		//하지만 명시를 해주는 것이 더 정확하니까 적든지 말든지
+		
+		//서비스 - 게시판글 정보를 가져오는 메서드
+		//BoardVO vo = service.getBoard(bno);
+		
+		//연결된 뷰로 전달
+		model.addAttribute("vo", service.getBoard(bno));
+		
+		//페이지 이동(출력) /board/modify.jsp
+	}
+	
+	
+	//글 수정하기 - POST(수정할 데이터 처리)
+	@RequestMapping(value="/modify", method = RequestMethod.POST)
+	public String modifyPOST(BoardVO vo, RedirectAttributes rttr) throws Exception{
+		
+		//전달 정보 저장
+		log.info("################################" + vo);
+		
+		//서비스 - 글 정보 수정
+		int cnt = service.updateBoard(vo);
+		
+		if(cnt == 1) {
+			//수정 성공 시 /listAll 페이지 이동
+			rttr.addFlashAttribute("msgUpdate", "OK");
+			return "redirect:/board/listAll";
+		} else {
+			//수정 실패 시
+			//예외처리
+			//new NullPointerException(); 시켜서 확인하는 것
+			return "/board/modify?bno="+vo.getBno();
+		}
+		
+	}
+	
+	
+	//글 삭제하기
+	@RequestMapping(value="/delete", method = RequestMethod.GET)
+	public String delete(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception{
+		//전달 정보 저장
+		
+		//서비스 - 글 삭제
+		service.deleteBoard(bno);
+		
+		log.info("글 삭제 완료");
+		rttr.addFlashAttribute("msgDelete", "OK");
+		
+		return "redirect:/board/listAll";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

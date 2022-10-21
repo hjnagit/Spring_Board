@@ -15,7 +15,8 @@
 
 <div class="box">
 	<div class="box-header with-border">
-		<h3 class="box-title">🙌😘나의 게시판🙌😘😍🙌😘😍환영합니다🙌😘🙌😘 </h3>
+		<h3 class="box-title">🙌😘나의 게시판🙌😘😍🙌😘😍키움헤이터🙌😘🙌😘 </h3>
+		<h1 style="background-color: #760C0C; color: white; display: inline-block;">🤢키움 싫어하는 사람들 모임🤮</h3>
 	</div>
 
 	<div class="box-body">
@@ -58,11 +59,21 @@
 
 <script type="text/javascript">
 	//alert(${msg});
-	var result = "${msg}";
+	var result1 = "${msg}";
+	var result2 = "${msgUpdate}";
+	var result3 = "${msgDelete}";
 	
-	if(result == "OK"){
+	
+	if(result1 == "OK"){
 		alert('글 쓰기 완료!');
 	}
+	if(result2 == "OK"){
+		alert('글 수정 완료!');
+	}
+	if(result3 == "OK"){
+		alert('글 삭제 완료!');
+	}
+
 	
 </script>
 

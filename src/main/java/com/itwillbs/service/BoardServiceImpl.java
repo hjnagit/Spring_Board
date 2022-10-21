@@ -47,6 +47,27 @@ public class BoardServiceImpl implements BoardService{
 		return dao.getBoard(bno);
 	}
 	
+	//글 조회수 1증가
+	@Override
+	public void updateReadCount(Integer bno) throws Exception {
+		log.info("updateReadCount(Integer bno) 호출");
+		
+		//DAO - updateReadCount(bno)
+		dao.updateReadCount(bno);
+	}
+	
+	//글 내용 수정하기
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		return dao.updateBoard(vo);
+	}
+	
+	//글 삭제하기
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		dao.deleteBoard(bno);
+	}
+	
 	
 	
 	

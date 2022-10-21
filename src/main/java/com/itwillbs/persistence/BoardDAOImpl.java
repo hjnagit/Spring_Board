@@ -54,6 +54,29 @@ public class BoardDAOImpl implements BoardDAO{
 	public BoardVO getBoard(Integer bno) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+".read", bno);
 	}
+
+	//글 조회수 1증가
+	@Override
+	public void updateReadCount(Integer bno) throws Exception {
+		log.info("updateReadCount(Integer bno) 호출");
+		
+		//sql - mapper 쿼리구문 호출
+		sqlSession.update(NAMESPACE+".updateReadCnt", bno);
+	}
+
+
+	//글 내용 수정하기
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		return sqlSession.update(NAMESPACE+".updateBoard", vo);
+	}
+
+	
+	//글 삭제하기
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		sqlSession.delete(NAMESPACE+".deleteBoard", bno);
+	}
 	
 	
 	
