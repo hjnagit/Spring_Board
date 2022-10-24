@@ -74,8 +74,8 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	//글 삭제하기
 	@Override
-	public void deleteBoard(Integer bno) throws Exception {
-		sqlSession.delete(NAMESPACE+".deleteBoard", bno);
+	public Integer deleteBoard(Integer bno) throws Exception {
+		return sqlSession.delete(NAMESPACE+".deleteBoard", bno);
 	}
 	
 	

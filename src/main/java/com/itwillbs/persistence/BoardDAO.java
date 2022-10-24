@@ -22,6 +22,6 @@ public interface BoardDAO {
 	public Integer updateBoard(BoardVO vo) throws Exception;
 	
 	//글 삭제
-	public void deleteBoard(Integer bno) throws Exception;
+	public Integer deleteBoard(Integer bno) throws Exception;
 	
 }

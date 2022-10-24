@@ -76,8 +76,6 @@
 			
 			//fr 속성 바꾸기 action, method
 			fr.attr("action", "/board/delete");
-			fr.attr("method", "get");
-			//속성을 바꾸고 서브밋하겠다
 			fr.submit();
 			
 		});

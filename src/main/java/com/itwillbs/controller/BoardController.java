@@ -187,7 +187,7 @@ public class BoardController {
 		
 		if(cnt == 1) {
 			//수정 성공 시 /listAll 페이지 이동
-			rttr.addFlashAttribute("msgUpdate", "OK");
+			rttr.addFlashAttribute("msg", "MODOK");
 			return "redirect:/board/listAll";
 		} else {
 			//수정 실패 시
@@ -199,17 +199,19 @@ public class BoardController {
 	}
 	
 	
-	//글 삭제하기
-	@RequestMapping(value="/delete", method = RequestMethod.GET)
+	//글 삭제하기-POST
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
 	public String delete(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception{
 		//전달 정보 저장
 		
 		//서비스 - 글 삭제
-		service.deleteBoard(bno);
+		int cnt = service.deleteBoard(bno);
 		
-		log.info("글 삭제 완료");
-		rttr.addFlashAttribute("msgDelete", "OK");
-		
+		if(cnt == 1) {
+			log.info("글 삭제 완료");
+			rttr.addFlashAttribute("msg", "DELOK");
+		}
+		//list페이지로 이동
 		return "redirect:/board/listAll";
 	}
 	

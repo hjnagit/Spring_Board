@@ -17,13 +17,14 @@
 	<div class="box-header with-border">
 		<h3 class="box-title">🙌😘나의 게시판🙌😘😍🙌😘😍키움헤이터🙌😘🙌😘 </h3>
 		<h1 style="background-color: #760C0C; color: white; display: inline-block;">🤢키움 싫어하는 사람들 모임🤮</h3>
+		<br><h1><a href="/board/regist">글쓰기</a></h1>
 	</div>
 
 	<div class="box-body">
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
-					<th style="width: 45px">번호</th>
+					<th style="width: 45px">번호</th> 
 					<th>글제목🙌</th>
 					<th>글쓴이😘</th>
 					<th>작성일😍</th>
@@ -59,18 +60,16 @@
 
 <script type="text/javascript">
 	//alert(${msg});
-	var result1 = "${msg}";
-	var result2 = "${msgUpdate}";
-	var result3 = "${msgDelete}";
+	var result = "${msg}";
 	
 	
-	if(result1 == "OK"){
+	if(result == "OK"){
 		alert('글 쓰기 완료!');
 	}
-	if(result2 == "OK"){
+	if(result == "MODOK"){
 		alert('글 수정 완료!');
 	}
-	if(result3 == "OK"){
+	if(result == "DELOK"){
 		alert('글 삭제 완료!');
 	}
 
