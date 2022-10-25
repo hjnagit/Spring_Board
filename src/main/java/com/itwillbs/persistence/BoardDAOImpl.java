@@ -1,6 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -77,6 +79,31 @@ public class BoardDAOImpl implements BoardDAO{
 	public Integer deleteBoard(Integer bno) throws Exception {
 		return sqlSession.delete(NAMESPACE+".deleteBoard", bno);
 	}
+
+	//글 리스트 페이지
+	@Override
+	public List<BoardVO> listPage(Integer page) throws Exception {
+		log.info("listPage(Integer page) 호출");
+		if(page <= 0) {
+			//제일 최신은 0임
+			page = 1;
+		}
+		
+		int pageSize = 30;
+		
+		//1페이지 - 0, 2 - 10, 3 - 20,....
+		page = (page - 1) * pageSize;
+		
+		//객체 만들어서 전달하기 - Map -> 이 방법밖에 없음
+		Map<String, Object> pageObj = new HashMap<String, Object>();
+		pageObj.put("page", page);
+		pageObj.put("pageSize", pageSize);
+		
+		
+		return sqlSession.selectList(NAMESPACE+".listPage2", pageObj);
+	}
+
+
 	
 	
 	

@@ -24,4 +24,8 @@ public interface BoardDAO {
 	//글 삭제
 	public Integer deleteBoard(Integer bno) throws Exception;
 	
+	//글 전체 목록 - listPage
+	public List<BoardVO> listPage(Integer page) throws Exception;
+	
+
 }

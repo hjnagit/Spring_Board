@@ -48,4 +48,21 @@
 		where bno=#{bno}
 	</delete>
 	
+	<!-- 글 페이지 -->
+	<select id="listPage" resultType="BoardVO">
+		select * 
+		from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{page},10
+	</select>
+	
+	<!-- 글 페이지2 -->
+	<select id="listPage2" resultType="BoardVO">
+		select * 
+		from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{page},#{pageSize}
+	</select>
+	
+		
 </mapper>

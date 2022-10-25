@@ -23,4 +23,6 @@ public interface BoardService {
 	
 	//글 삭제
 	public Integer deleteBoard(Integer bno) throws Exception;
+	
+
 }
