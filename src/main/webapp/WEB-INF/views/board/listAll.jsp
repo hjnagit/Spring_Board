@@ -11,7 +11,7 @@
 
 <h1>board/listAll.jsp</h1>
 
-
+${pm }
 
 <div class="box">
 	<div class="box-header with-border">
@@ -49,11 +49,18 @@
 
 	<div class="box-footer clearfix">
 		<ul class="pagination pagination-sm no-margin pull-right">
-			<li><a href="#">«</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">»</a></li>
+			<c:if test="${pm.prev }">
+				<li><a href="listPage?page=${pm.startPage-1 }">&laquo;</a></li>
+			</c:if>
+			<c:forEach var="idx" begin="${pm.startPage }" end="${pm.endPage }">
+				<%-- <li <c:out value="${pm.vo.page == idx ? 'class=active':'' }"/>> --%>
+				<li ${pm.vo.page == idx ? 'class=active':'' }>
+					<a href="listPage?page=${idx }">${idx }</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pm.next }">
+				<li><a href="listPage?page=${pm.endPage+1 }">&raquo;</a></li>
+			</c:if>
 		</ul>
 	</div>
 </div>

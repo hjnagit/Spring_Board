@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageMakerVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
 
 @Controller
@@ -72,7 +74,7 @@ public class BoardController {
 		// 페이지 이동(리스트) 화면, 주소 모두 변경
 		//redirect:/board/listAll => 여기는 공백 사용금지
 		//return "redirect:/board/listAll?msg=OK";
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	
@@ -188,7 +190,7 @@ public class BoardController {
 		if(cnt == 1) {
 			//수정 성공 시 /listAll 페이지 이동
 			rttr.addFlashAttribute("msg", "MODOK");
-			return "redirect:/board/listAll";
+			return "redirect:/board/listPage";
 		} else {
 			//수정 실패 시
 			//예외처리
@@ -212,10 +214,32 @@ public class BoardController {
 			rttr.addFlashAttribute("msg", "DELOK");
 		}
 		//list페이지로 이동
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
-	
+	//파라메타를 주면 자동으로 페이징처리가 된다
+	//http://localhost:8088/board/listPage?page=2
+	//http://localhost:8088/board/listPage?page=2&perPageNum=20
+	//게시판 리스트(페이징 처리) - GET
+	@RequestMapping(value="/listPage", method = RequestMethod.GET)
+	public String listPageGET(PageVO vo, Model model, HttpSession session) throws Exception{
+		log.info("listPageGET() 호출");
+//		PageVO vo = new PageVO();
+//		vo.setPage(2);
+//		vo.setPerPageNum(30);
+		
+		model.addAttribute("boardList", service.listPage(vo));
+		session.setAttribute("isUpdate", false);
+		
+		//페이징 처리 하단부 정보를 정장
+		PageMakerVO pm = new PageMakerVO();
+		pm.setVo(vo);
+		pm.setTotalCnt(3396); //글개수
+		
+		model.addAttribute("pm", pm);
+		
+		return "/board/listAll";
+	}
 	
 	
 	

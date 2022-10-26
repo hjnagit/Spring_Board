@@ -85,7 +85,7 @@
 		
 		//목록으로 이동하기
 		$(".btn-success").click(function(){
-			location.href="/board/listAll";
+			location.href="/board/listPage";
 		});
 		
 		//

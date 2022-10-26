@@ -7,8 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>commons.jsp</h1>
-	<h2> 페이지 실행중 에러가 발생했습니다.</h2>
-	<%-- ${e } --%>
+   <h1>commons.JSP</h1>
+   
+   <h2> 페이지 실행중 에러가 발생했습니다.</h2>
+   
+<%--    ${e } --%>
+   
+   
 </body>
 </html>

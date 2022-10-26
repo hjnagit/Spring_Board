@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.persistence.BoardDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,6 +26,7 @@ public class BoardDAOTest {
 	@Inject
 	private BoardDAO dao; //의존관계 주입
 	
+	
 	//객체주입 끝//////////////////////////////////////////////////////
 	
 	//테스트 동작하는지 확인
@@ -35,7 +37,7 @@ public class BoardDAOTest {
 	
 	
 	//페이징 처리가 되는지 안되는지 테스트하기
-	@Test
+	//@Test
 	public void 페이징처리완료() {
 		//DAOImpl - listPage()호출
 		
@@ -50,8 +52,18 @@ public class BoardDAOTest {
 		//log.info(dao.listPage(1)+"");
 	}
 	
-	
-	
+	@Test
+	public void pageVoObjectTest() {
+		log.info("pageVoObjectTest()@@@@@@@@@@@@@@@@@@@@@@@@@@@ ");
+		PageVO vo = new PageVO(); // 생성자로 설정함 1페이지 10개씩
+		
+		try {
+			System.out.println(dao.listPage(vo)); //출력되는 것 확인가능
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

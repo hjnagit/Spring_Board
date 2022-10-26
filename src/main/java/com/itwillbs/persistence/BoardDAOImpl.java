@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
@@ -101,6 +102,15 @@ public class BoardDAOImpl implements BoardDAO{
 		
 		
 		return sqlSession.selectList(NAMESPACE+".listPage2", pageObj);
+	}
+
+	//글 리스트 페이지 - PageVO
+	@Override
+	public List<BoardVO> listPage(PageVO vo) throws Exception {
+		
+		log.info(" listPage(PageVO vo) 호출");
+		
+		return sqlSession.selectList(NAMESPACE+".listPage3", vo);
 	}
 
 

@@ -64,5 +64,13 @@
 		limit #{page},#{pageSize}
 	</select>
 	
+	<!-- 글 페이지2 -->
+	<select id="listPage3" resultType="BoardVO">
+		select * 
+		from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{pageStart},#{perPageNum}
+	</select>
+	
 		
 </mapper>
