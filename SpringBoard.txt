@@ -8,7 +8,7 @@ SpringBoard.txt
   스프링MVC
     패키지 준비 (domain/persistence/service/controller/....)
     파트별 동작 준비
-    파트별 테스트 준비
+    파트별 테스트 준비 
       
   View
     화면방식 결정(JSP/HTML(+js))
